@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { LogIn, UserPlus, Sparkles } from "lucide-react";
 import { z } from "zod";
 
 const emailSchema = z.string().trim().email({ message: "Please enter a valid email address" }).max(255);
@@ -167,25 +168,47 @@ const Auth = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary/10 via-background to-accent/10 p-4">
-      <Card className="w-full max-w-md">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50 p-4">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-gradient-primary opacity-20 blur-3xl animate-float" />
+        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-secondary opacity-20 blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-accent/10 blur-3xl animate-glow" />
+      </div>
+
+      <Card className="relative w-full max-w-md border-none shadow-soft backdrop-blur-sm bg-white/80 animate-scale-in">
         <Tabs defaultValue="login" className="w-full">
-          <CardHeader>
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="register">Register</TabsTrigger>
+          <CardHeader className="space-y-4 pb-4">
+            <div className="flex justify-center mb-2">
+              <div className="p-3 rounded-full bg-gradient-primary shadow-glow">
+                <Sparkles className="h-8 w-8 text-white" />
+              </div>
+            </div>
+            <div className="text-center">
+              <CardTitle className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                Welcome
+              </CardTitle>
+              <CardDescription className="text-base mt-2">
+                Sign in to your account or create a new one
+              </CardDescription>
+            </div>
+            <TabsList className="grid w-full grid-cols-2 bg-muted/50">
+              <TabsTrigger value="login" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-white transition-all">
+                <LogIn className="h-4 w-4 mr-2" />
+                Login
+              </TabsTrigger>
+              <TabsTrigger value="register" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-white transition-all">
+                <UserPlus className="h-4 w-4 mr-2" />
+                Register
+              </TabsTrigger>
             </TabsList>
           </CardHeader>
 
-          <TabsContent value="login">
+          <TabsContent value="login" className="animate-fade-in">
             <form onSubmit={handleLogin}>
-              <CardHeader>
-                <CardTitle>Welcome Back</CardTitle>
-                <CardDescription>Enter your credentials to access your account</CardDescription>
-              </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="login-email">Email</Label>
+                  <Label htmlFor="login-email" className="text-sm font-medium">Email</Label>
                   <Input
                     id="login-email"
                     type="email"
@@ -194,10 +217,11 @@ const Auth = () => {
                     onChange={(e) => setLoginEmail(e.target.value)}
                     required
                     disabled={isLoading}
+                    className="h-11 border-2 focus:border-primary transition-colors"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="login-password">Password</Label>
+                  <Label htmlFor="login-password" className="text-sm font-medium">Password</Label>
                   <Input
                     id="login-password"
                     type="password"
@@ -206,26 +230,27 @@ const Auth = () => {
                     onChange={(e) => setLoginPassword(e.target.value)}
                     required
                     disabled={isLoading}
+                    className="h-11 border-2 focus:border-primary transition-colors"
                   />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button 
+                  type="submit" 
+                  className="w-full h-11 bg-gradient-primary hover:opacity-90 transition-opacity shadow-soft text-white font-medium" 
+                  disabled={isLoading}
+                >
                   {isLoading ? "Logging in..." : "Log In"}
                 </Button>
               </CardFooter>
             </form>
           </TabsContent>
 
-          <TabsContent value="register">
+          <TabsContent value="register" className="animate-fade-in">
             <form onSubmit={handleRegister}>
-              <CardHeader>
-                <CardTitle>Create Account</CardTitle>
-                <CardDescription>Sign up to get started</CardDescription>
-              </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="register-name">Full Name</Label>
+                  <Label htmlFor="register-name" className="text-sm font-medium">Full Name</Label>
                   <Input
                     id="register-name"
                     type="text"
@@ -234,10 +259,11 @@ const Auth = () => {
                     onChange={(e) => setRegisterName(e.target.value)}
                     required
                     disabled={isLoading}
+                    className="h-11 border-2 focus:border-primary transition-colors"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="register-email">Email</Label>
+                  <Label htmlFor="register-email" className="text-sm font-medium">Email</Label>
                   <Input
                     id="register-email"
                     type="email"
@@ -246,10 +272,11 @@ const Auth = () => {
                     onChange={(e) => setRegisterEmail(e.target.value)}
                     required
                     disabled={isLoading}
+                    className="h-11 border-2 focus:border-primary transition-colors"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="register-password">Password</Label>
+                  <Label htmlFor="register-password" className="text-sm font-medium">Password</Label>
                   <Input
                     id="register-password"
                     type="password"
@@ -258,11 +285,16 @@ const Auth = () => {
                     onChange={(e) => setRegisterPassword(e.target.value)}
                     required
                     disabled={isLoading}
+                    className="h-11 border-2 focus:border-primary transition-colors"
                   />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button 
+                  type="submit" 
+                  className="w-full h-11 bg-gradient-primary hover:opacity-90 transition-opacity shadow-soft text-white font-medium" 
+                  disabled={isLoading}
+                >
                   {isLoading ? "Creating account..." : "Create Account"}
                 </Button>
               </CardFooter>
