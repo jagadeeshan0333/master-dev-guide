@@ -1,26 +1,38 @@
-import { base44 } from './base44Client';
+/**
+ * ============================================
+ * INTEGRATIONS
+ * ============================================
+ * 
+ * This file exports integration utilities.
+ * These are placeholder functions for future integrations.
+ */
 
+export const Core = {};
 
+export const InvokeLLM = () => {
+  console.warn('InvokeLLM integration not yet implemented');
+};
 
+export const SendEmail = () => {
+  console.warn('SendEmail integration not yet implemented');
+};
 
-export const Core = base44.integrations.Core;
+export const UploadFile = () => {
+  console.warn('UploadFile integration not yet implemented');
+};
 
-export const InvokeLLM = base44.integrations.Core.InvokeLLM;
+export const GenerateImage = () => {
+  console.warn('GenerateImage integration not yet implemented');
+};
 
-export const SendEmail = base44.integrations.Core.SendEmail;
+export const ExtractDataFromUploadedFile = () => {
+  console.warn('ExtractDataFromUploadedFile integration not yet implemented');
+};
 
-export const UploadFile = base44.integrations.Core.UploadFile;
+export const CreateFileSignedUrl = () => {
+  console.warn('CreateFileSignedUrl integration not yet implemented');
+};
 
-export const GenerateImage = base44.integrations.Core.GenerateImage;
-
-export const ExtractDataFromUploadedFile = base44.integrations.Core.ExtractDataFromUploadedFile;
-
-export const CreateFileSignedUrl = base44.integrations.Core.CreateFileSignedUrl;
-
-export const UploadPrivateFile = base44.integrations.Core.UploadPrivateFile;
-
-
-
-
-
-
+export const UploadPrivateFile = () => {
+  console.warn('UploadPrivateFile integration not yet implemented');
+};

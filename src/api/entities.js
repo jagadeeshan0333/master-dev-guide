@@ -1,127 +1,116 @@
-import { base44 } from './base44Client';
+import { supabase } from '@/integrations/supabase/client';
 
 /**
  * ============================================
  * COMPLETE BACKEND ENTITIES (Models Layer)
- * PostgreSQL Implementation via Base44 SDK
+ * PostgreSQL Implementation via Supabase
  * ============================================
  * 
  * This provides a Sequelize-like ORM interface
- * for all database tables using Base44
+ * for all database tables using Supabase
  */
 
 // ============================================
-// EXISTING ENTITIES (Base44 Managed)
+// HELPER FUNCTION TO CREATE ENTITY INTERFACE
 // ============================================
 
-export const Stock = base44.entities.Stock;
-export const ChatRoom = base44.entities.ChatRoom;
-export const Message = base44.entities.Message;
-export const Poll = base44.entities.Poll;
-export const PollVote = base44.entities.PollVote;
-export const Subscription = base44.entities.Subscription;
-export const Pledge = base44.entities.Pledge;
-export const FinInfluencer = base44.entities.FinInfluencer;
-export const InfluencerPost = base44.entities.InfluencerPost;
-export const News = base44.entities.News;
-export const Meeting = base44.entities.Meeting;
-export const StockPrice = base44.entities.StockPrice;
-export const ChatPoll = base44.entities.ChatPoll;
-export const ChatPollVote = base44.entities.ChatPollVote;
-export const Event = base44.entities.Event;
-export const EventAttendee = base44.entities.EventAttendee;
-export const TrustScoreLog = base44.entities.TrustScoreLog;
-export const ModerationLog = base44.entities.ModerationLog;
-export const Referral = base44.entities.Referral;
-export const ReferralBadge = base44.entities.ReferralBadge;
-export const ContactInquiry = base44.entities.ContactInquiry;
-export const Notification = base44.entities.Notification;
-export const NotificationSetting = base44.entities.NotificationSetting;
-export const Course = base44.entities.Course;
-export const CourseEnrollment = base44.entities.CourseEnrollment;
-export const RevenueTransaction = base44.entities.RevenueTransaction;
-export const Advisor = base44.entities.Advisor;
-export const AdvisorPlan = base44.entities.AdvisorPlan;
-export const AdvisorSubscription = base44.entities.AdvisorSubscription;
-export const AdvisorPost = base44.entities.AdvisorPost;
-export const CommissionTracking = base44.entities.CommissionTracking;
-export const PlatformSetting = base44.entities.PlatformSetting;
-export const AdvisorReview = base44.entities.AdvisorReview;
-export const Watchlist = base44.entities.Watchlist;
-export const UserInvestment = base44.entities.UserInvestment;
-export const AlertSetting = base44.entities.AlertSetting;
-export const StockTransaction = base44.entities.StockTransaction;
-export const Feedback = base44.entities.Feedback;
-export const Expense = base44.entities.Expense;
-export const FinancialAuditLog = base44.entities.FinancialAuditLog;
-export const Role = base44.entities.Role;
-export const AlertConfiguration = base44.entities.AlertConfiguration;
-export const AlertLog = base44.entities.AlertLog;
-export const SubscriptionPlan = base44.entities.SubscriptionPlan;
-export const PromoCode = base44.entities.PromoCode;
-export const SubscriptionTransaction = base44.entities.SubscriptionTransaction;
-export const EntityConfig = base44.entities.EntityConfig;
-export const Educator = base44.entities.Educator;
-export const Permission = base44.entities.Permission;
-export const RolePermission = base44.entities.RolePermission;
-export const AuditLog = base44.entities.AuditLog;
-export const RoleTemplate = base44.entities.RoleTemplate;
-export const RoleTemplatePermission = base44.entities.RoleTemplatePermission;
-export const PayoutRequest = base44.entities.PayoutRequest;
-export const AdvisorRecommendation = base44.entities.AdvisorRecommendation;
-export const UserInvite = base44.entities.UserInvite;
-export const EventTicket = base44.entities.EventTicket;
-export const EventCommissionTracking = base44.entities.EventCommissionTracking;
-export const CommissionSettings = base44.entities.CommissionSettings;
-export const PledgeSession = base44.entities.PledgeSession;
-export const UserDematAccount = base44.entities.UserDematAccount;
-export const PledgePayment = base44.entities.PledgePayment;
-export const PledgeExecutionRecord = base44.entities.PledgeExecutionRecord;
-export const PledgeAuditLog = base44.entities.PledgeAuditLog;
-export const PledgeAccessRequest = base44.entities.PledgeAccessRequest;
-export const Vendor = base44.entities.Vendor;
-export const AdCampaign = base44.entities.AdCampaign;
-export const AdImpression = base44.entities.AdImpression;
-export const AdClick = base44.entities.AdClick;
-export const AdTransaction = base44.entities.AdTransaction;
-export const CampaignBilling = base44.entities.CampaignBilling;
-export const FundPlan = base44.entities.FundPlan;
-export const InvestorRequest = base44.entities.InvestorRequest;
-export const Investor = base44.entities.Investor;
-export const FundWallet = base44.entities.FundWallet;
-export const FundAllocation = base44.entities.FundAllocation;
-export const FundTransaction = base44.entities.FundTransaction;
-export const FundInvoice = base44.entities.FundInvoice;
-export const FundPayoutRequest = base44.entities.FundPayoutRequest;
-export const FundAdmin = base44.entities.FundAdmin;
-export const FundNotification = base44.entities.FundNotification;
-export const FundWithdrawalRequest = base44.entities.FundWithdrawalRequest;
-export const InvestmentRequest = base44.entities.InvestmentRequest;
-export const InvestmentAllocation = base44.entities.InvestmentAllocation;
-export const ProfitPayoutSchedule = base44.entities.ProfitPayoutSchedule;
-export const InvestorProfitPayout = base44.entities.InvestorProfitPayout;
-export const FeatureConfig = base44.entities.FeatureConfig;
-export const ModuleApprovalRequest = base44.entities.ModuleApprovalRequest;
-export const Review = base44.entities.Review;
-export const EventOrganizer = base44.entities.EventOrganizer;
-export const RefundRequest = base44.entities.RefundRequest;
-export const PledgeOrder = base44.entities.PledgeOrder;
-export const MessageReaction = base44.entities.MessageReaction;
-export const TypingIndicator = base44.entities.TypingIndicator;
-export const Ticket = base44.entities.Ticket;
+const createEntity = (tableName) => ({
+  // List all records
+  list: async () => {
+    const { data, error } = await supabase.from(tableName).select('*');
+    if (error) throw error;
+    return data || [];
+  },
+
+  // Filter records
+  filter: async (conditions) => {
+    let query = supabase.from(tableName).select('*');
+    
+    Object.entries(conditions).forEach(([key, value]) => {
+      query = query.eq(key, value);
+    });
+    
+    const { data, error } = await query;
+    if (error) throw error;
+    return data || [];
+  },
+
+  // Get single record by ID
+  get: async (id) => {
+    const { data, error } = await supabase
+      .from(tableName)
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
+  // Create new record
+  create: async (record) => {
+    const { data, error } = await supabase
+      .from(tableName)
+      .insert(record)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
+  // Update record
+  update: async (id, updates) => {
+    const { data, error } = await supabase
+      .from(tableName)
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
+  // Delete record
+  delete: async (id) => {
+    const { error } = await supabase
+      .from(tableName)
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+    return true;
+  }
+});
 
 // ============================================
-// NEW SUPABASE ENTITIES (From Migration)
+// DATABASE ENTITIES
 // ============================================
 
-export const UserRole = base44.entity('user_roles');
-export const Profile = base44.entity('profiles');
-export const UserSubscription = base44.entity('user_subscriptions');
-export const Payment = base44.entity('payments');
-export const Finfluencer = base44.entity('finfluencers');
-export const EventRegistration = base44.entity('event_registrations');
-export const ChatMessage = base44.entity('chat_messages');
-export const Portfolio = base44.entity('portfolios');
+export const UserRole = createEntity('user_roles');
+export const Profile = createEntity('profiles');
+export const UserSubscription = createEntity('user_subscriptions');
+export const Payment = createEntity('payments');
+export const Finfluencer = createEntity('finfluencers');
+export const EventRegistration = createEntity('event_registrations');
+export const ChatMessage = createEntity('chat_messages');
+export const Portfolio = createEntity('portfolios');
+export const Watchlist = createEntity('watchlist');
+export const Advisor = createEntity('advisors');
+export const AdvisorReview = createEntity('advisor_reviews');
+export const Event = createEntity('events');
+export const PledgeSession = createEntity('pledge_sessions');
+export const Pledge = createEntity('pledges');
+export const PledgeExecutionRecord = createEntity('pledge_execution_records');
+export const PledgeAuditLog = createEntity('pledge_audit_logs');
+export const Poll = createEntity('polls');
+export const PollVote = createEntity('poll_votes');
+export const ChatRoom = createEntity('chat_rooms');
+export const Notification = createEntity('notifications');
+export const SubscriptionPlan = createEntity('subscription_plans');
+export const PlatformSetting = createEntity('platform_settings');
+export const Course = createEntity('courses');
+export const CourseEnrollment = createEntity('course_enrollments');
+export const RevenueTransaction = createEntity('revenue_transactions');
+export const EventAttendee = createEntity('event_attendees');
+export const EventTicket = createEntity('event_tickets');
 
 // ============================================
 // USER ENTITY (Auth System)
@@ -131,8 +120,9 @@ export const User = {
   // Get current authenticated user
   me: async () => {
     try {
-      const response = await base44.auth.me();
-      return response;
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error) throw error;
+      return user;
     } catch (error) {
       console.error('Error fetching current user:', error);
       return null;

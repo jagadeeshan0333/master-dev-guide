@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { supabase } from '@/integrations/supabase/client';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,10 +28,16 @@ export default function TicketCheckIn({ event, open, onClose, onUpdate }) {
   const loadCheckInData = async () => {
     try {
       setIsLoading(true);
-      const [attendeesData, ticketsData] = await Promise.all([
-        base44.entities.EventAttendee.filter({ event_id: event.id }),
-        base44.entities.EventTicket.filter({ event_id: event.id, status: 'active' })
-      ]);
+      const { data: attendeesData } = await supabase
+        .from('event_attendees')
+        .select('*')
+        .eq('event_id', event.id);
+      
+      const { data: ticketsData } = await supabase
+        .from('event_tickets')
+        .select('*')
+        .eq('event_id', event.id)
+        .eq('status', 'active');
 
       setAttendees(attendeesData);
       setTickets(ticketsData);
@@ -77,12 +83,18 @@ export default function TicketCheckIn({ event, open, onClose, onUpdate }) {
       }
       
       // Mark ticket as used
-      await base44.entities.EventTicket.update(ticket.id, { status: 'used' });
+      await supabase
+        .from('event_tickets')
+        .update({ status: 'used' })
+        .eq('id', ticket.id);
       
       // Mark attendee as confirmed
       const attendee = attendees.find(a => a.user_id === ticket.user_id);
       if (attendee) {
-        await base44.entities.EventAttendee.update(attendee.id, { confirmed: true });
+        await supabase
+          .from('event_attendees')
+          .update({ confirmed: true })
+          .eq('id', attendee.id);
       }
       
       toast.success('Check-in successful!');

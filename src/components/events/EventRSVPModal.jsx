@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Dialog,
   DialogContent,
@@ -27,12 +27,20 @@ export default function EventRSVPModal({ event, open, onClose }) {
   const loadAttendees = async () => {
     try {
       setIsLoading(true);
-      const [attendeesData, ticketsData] = await Promise.all([
-        base44.entities.EventAttendee.filter({ event_id: event.id }),
-        event.is_premium && event.ticket_price > 0 
-          ? base44.entities.EventTicket.filter({ event_id: event.id, status: 'active' })
-          : Promise.resolve([])
-      ]);
+      const { data: attendeesData } = await supabase
+        .from('event_attendees')
+        .select('*')
+        .eq('event_id', event.id);
+      
+      let ticketsData = [];
+      if (event.is_premium && event.ticket_price > 0) {
+        const { data } = await supabase
+          .from('event_tickets')
+          .select('*')
+          .eq('event_id', event.id)
+          .eq('status', 'active');
+        ticketsData = data || [];
+      }
 
       setAttendees(attendeesData);
       setTickets(ticketsData);

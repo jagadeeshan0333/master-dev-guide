@@ -21,7 +21,7 @@ import {
   Loader2
 } from 'lucide-react';
 import { format } from 'date-fns';
-import { base44 } from '@/api/base44Client';
+import { User, CourseEnrollment, RevenueTransaction } from '@/api/entities';
 import { toast } from 'sonner';
 
 export default function EnrollmentModal({ open, onClose, course, influencer }) {
@@ -34,7 +34,7 @@ export default function EnrollmentModal({ open, onClose, course, influencer }) {
     
     try {
       // Get current user
-      const currentUser = await base44.auth.me();
+      const currentUser = await User.me();
       
       // Check if Razorpay is loaded
       if (typeof window.Razorpay === 'undefined') {
@@ -85,10 +85,10 @@ export default function EnrollmentModal({ open, onClose, course, influencer }) {
             };
 
             // Create course enrollment record
-            await base44.entities.CourseEnrollment.create(enrollmentData);
+            await CourseEnrollment.create(enrollmentData);
 
             // Create revenue transaction record
-            await base44.entities.RevenueTransaction.create({
+            await RevenueTransaction.create({
               influencer_id: influencer.id,
               course_id: course.id,
               user_id: currentUser.id,

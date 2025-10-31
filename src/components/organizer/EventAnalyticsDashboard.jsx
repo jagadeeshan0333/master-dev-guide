@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { base44 } from '@/api/base44Client';
+import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -24,12 +24,20 @@ export default function EventAnalyticsDashboard({ events, commissionTracking }) 
   const loadAnalyticsData = async () => {
     try {
       setIsLoading(true);
-      const attendeePromises = events.map(event =>
-        base44.entities.EventAttendee.filter({ event_id: event.id })
-      );
-      const ticketPromises = events.map(event =>
-        base44.entities.EventTicket.filter({ event_id: event.id })
-      );
+      const attendeePromises = events.map(async (event) => {
+        const { data } = await supabase
+          .from('event_attendees')
+          .select('*')
+          .eq('event_id', event.id);
+        return data || [];
+      });
+      const ticketPromises = events.map(async (event) => {
+        const { data } = await supabase
+          .from('event_tickets')
+          .select('*')
+          .eq('event_id', event.id);
+        return data || [];
+      });
 
       const [attendeesResults, ticketsResults] = await Promise.all([
         Promise.all(attendeePromises),
