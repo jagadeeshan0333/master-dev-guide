@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, Plus, TrendingUp, TrendingDown, Loader2 } from "lucide-react";
-import { Stock } from "@/api/entities";
+
 import { debounce } from "lodash";
 
 export default function AddStockModal({ open, onClose, watchlist, onAddStock }) {
@@ -24,8 +24,8 @@ export default function AddStockModal({ open, onClose, watchlist, onAddStock }) 
       const loadAllStocks = async () => {
         setIsSearching(true);
         try {
-          const stocks = await Stock.list('', 50);
-          setAllStocks(stocks);
+          // Stock data is not stored in the database, so we set empty array
+          setAllStocks([]);
         } catch (error) {
           console.error('Error loading stocks:', error);
           setAllStocks([]);

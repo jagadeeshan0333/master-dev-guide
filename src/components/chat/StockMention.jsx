@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { TrendingUp, TrendingDown, ExternalLink, BarChart3, Sparkles } from 'lucide-react';
-import { Stock } from '@/api/entities';
+
 import { stockAPI } from '../stocks/LiveStockAPI';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from 'react-router-dom';
@@ -28,12 +28,7 @@ export default function StockMention({ symbol }) {
       if (liveData) {
         setStockData(liveData);
       } else {
-        const dbStocks = await Stock.filter({ symbol: symbol.toUpperCase() }, '', 1);
-        if (dbStocks.length > 0) {
-          setStockData(dbStocks[0]);
-        } else {
-          setError(true);
-        }
+        setError(true);
       }
     } catch (error) {
       console.error('Error loading stock data:', error);

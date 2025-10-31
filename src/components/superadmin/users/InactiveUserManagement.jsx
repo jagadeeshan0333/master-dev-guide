@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { User, Stock, Poll } from '@/api/entities';
+import { User, Poll } from '@/api/entities';
 import { SendEmail } from '@/api/integrations';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Star, MessageSquare, TrendingUp, TrendingDown } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { User, ChatRoom, Watchlist, Stock } from "@/api/entities";
+import { User, ChatRoom, Watchlist } from "@/api/entities";
 import { toast } from "sonner";
 
 export default function TrendingStocks({ stocks }) {

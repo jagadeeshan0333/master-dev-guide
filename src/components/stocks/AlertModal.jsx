@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { AlertSetting, NotificationSetting, Stock } from "@/api/entities";
+
 import { 
   BellRing, 
   TrendingUp, 

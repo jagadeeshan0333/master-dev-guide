@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Plus, TrendingUp, TrendingDown, BarChart3, Wallet, Search, LayoutGrid, List, Eye, MessageSquare, Bell, X, Award, Lock, IndianRupee, User as UserIcon } from 'lucide-react'; // Added UserIcon
-import { User, Stock, UserInvestment, Watchlist, ChatRoom, Poll } from '@/api/entities';
+import { User, Watchlist, ChatRoom, Poll } from '@/api/entities';
 import { toast } from 'sonner';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom'; // Assuming react-router-dom for Link, adjust if using Next.js/other routing
