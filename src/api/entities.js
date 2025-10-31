@@ -111,6 +111,8 @@ export const CourseEnrollment = createEntity('course_enrollments');
 export const RevenueTransaction = createEntity('revenue_transactions');
 export const EventAttendee = createEntity('event_attendees');
 export const EventTicket = createEntity('event_tickets');
+export const EntityConfig = createEntity('entity_configs');
+export const FeatureConfig = createEntity('feature_configs');
 
 // ============================================
 // USER ENTITY (Auth System)
