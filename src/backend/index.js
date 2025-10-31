@@ -24,6 +24,14 @@
 export { default as UserController } from './controllers/UserController';
 export { default as PaymentController } from './controllers/PaymentController';
 export { default as PledgeController } from './controllers/PledgeController';
+export { default as EventController } from './controllers/EventController';
+export { default as AdvisorController } from './controllers/AdvisorController';
+export { default as PollController } from './controllers/PollController';
+export { default as NotificationController } from './controllers/NotificationController';
+export { default as SubscriptionController } from './controllers/SubscriptionController';
+export { default as ChatController } from './controllers/ChatController';
+export { default as PortfolioController } from './controllers/PortfolioController';
+export { default as WatchlistController } from './controllers/WatchlistController';
 
 // ============================================
 // SERVICES (Business Logic Layer)
@@ -36,6 +44,10 @@ export { default as EventService } from './services/EventService';
 export { default as AdvisorService } from './services/AdvisorService';
 export { default as PollService } from './services/PollService';
 export { default as NotificationService } from './services/NotificationService';
+export { default as SubscriptionService } from './services/SubscriptionService';
+export { default as ChatService } from './services/ChatService';
+export { default as PortfolioService } from './services/PortfolioService';
+export { default as WatchlistService } from './services/WatchlistService';
 
 // ============================================
 // ENTITIES (Data Models)
