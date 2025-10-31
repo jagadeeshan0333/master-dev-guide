@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Shield, Target, ArrowRight, TrendingUp, TrendingDown, Eye, Crown } from 'lucide-react';
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { User, Subscription } from '@/api/entities';
+import { User, UserSubscription } from '@/api/entities';
 
 export default function AdvisorRecommendations({ recommendations }) {
   const [user, setUser] = useState(null);
@@ -27,7 +27,7 @@ export default function AdvisorRecommendations({ recommendations }) {
         } else {
           // Check subscription for regular users
           try {
-            const subs = await Subscription.filter({ 
+            const subs = await UserSubscription.filter({ 
               user_id: currentUser.id, 
               status: 'active' 
             });

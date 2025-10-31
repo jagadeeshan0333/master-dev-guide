@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, X, MessageSquare, BarChart3, Bell, Lock, Crown, CheckCircle, Pause, XCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { User, Poll, AdvisorPost, Subscription } from "@/api/entities";
+import { User, Poll, UserSubscription } from "@/api/entities";
 import AlertModal from "./AlertModal";
 import AdDisplay from "@/components/common/AdDisplay"; // Assuming AdDisplay component is located here
 

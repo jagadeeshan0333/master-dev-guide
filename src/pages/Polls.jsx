@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
-import { Poll, PollVote, User, Subscription } from "@/api/entities"; // Added Subscription
+import { Poll, PollVote, User, UserSubscription } from "@/api/entities"; // Added UserSubscription
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

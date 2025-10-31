@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { User, Referral, ReferralBadge, Subscription } from "@/api/entities";
+import { User, UserSubscription } from "@/api/entities";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -44,16 +44,12 @@ export default function Profile() {
 
           // Load additional data for logged-in users
           try {
-            const [userSubs, userReferrals] = await Promise.all([
-              Subscription.filter({ user_id: currentUser.id, status: 'active' }).catch(() => []),
-              Referral.filter({ inviter_id: currentUser.id }).catch(() => [])
+            const [userSubs] = await Promise.all([
+              UserSubscription.filter({ user_id: currentUser.id, status: 'active' }).catch(() => [])
             ]);
 
             if (isMounted) {
               setSubscription(userSubs[0] || null);
-              setReferrals(userReferrals);
-              // Note: ReferralBadge data loading for 'badges' state is removed here as per outline.
-              // 'badges' will remain an empty array unless loaded elsewhere or if component allows empty state.
             }
           } catch (error) {
             console.log("Error loading additional user data:", error);

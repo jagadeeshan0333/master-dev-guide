@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Subscription, User } from '@/api/entities';
+import { UserSubscription, User } from '@/api/entities';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { toast } from "sonner";
-import { PlatformSetting, Subscription } from "@/api/entities";
+import { PlatformSetting, UserSubscription } from "@/api/entities";
 import SubscriptionRefundModal from "./SubscriptionRefundModal";
 
 export default function CurrentPlan({ subscription, onUpgrade, onCancelSubscription, isCancelling }) {

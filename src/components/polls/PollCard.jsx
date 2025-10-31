@@ -34,7 +34,7 @@ import { usePlatformSettings } from "../hooks/usePlatformSettings";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import AdDisplay from '../dashboard/AdDisplay'; // Corrected Path
 import toast from 'react-hot-toast'; // Import toast for notifications
-import { User, Subscription } from '@/api/entities'; // Import Subscription entity
+import { User, UserSubscription } from '@/api/entities'; // Import UserSubscription entity
 
 export default function PollCard({ poll, user, userVote, onVoteSubmit, onViewDetails, onDelete, isLocked, userPledge }) {
   const { settings } = usePlatformSettings();

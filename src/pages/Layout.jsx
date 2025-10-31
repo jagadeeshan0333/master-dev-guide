@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { Bell, LogOut, Settings, User as UserIcon, LayoutDashboard, MessageSquare, BarChart3, CalendarDays, Shield, Star, GraduationCap, Sparkles, Users, Wallet, Crown, ChevronDown, Edit3, LogIn } from "lucide-react";
-import { User, Subscription } from "@/api/entities";
+import { User, UserSubscription } from "@/api/entities";
 import RealtimeNotificationBell from "@/components/notifications/RealtimeNotificationBell";
 import { EntityConfigProvider } from "@/components/context/EntityConfigProvider";
 import { SubscriptionProvider } from "@/components/context/SubscriptionProvider";

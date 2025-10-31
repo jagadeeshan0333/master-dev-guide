@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Advisor, User, Subscription } from '@/api/entities'; // Added Subscription import
+import { Advisor, User, UserSubscription } from '@/api/entities'; // Added UserSubscription import
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

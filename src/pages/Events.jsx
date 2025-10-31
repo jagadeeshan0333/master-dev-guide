@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { Event, EventTicket, EventAttendee, User, Subscription } from '@/api/entities';
+import { Event, EventTicket, EventAttendee, User, UserSubscription } from '@/api/entities';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
