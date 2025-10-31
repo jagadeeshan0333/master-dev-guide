@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
-import { User, Subscription, AdvisorSubscription, SubscriptionPlan } from '@/api/entities';
+import { User, UserSubscription, SubscriptionPlan } from '@/api/entities';
+import { supabase } from '@/integrations/supabase/client';
 
 export const SubscriptionContext = createContext(null);
 
@@ -49,17 +50,21 @@ export function SubscriptionProvider({ children }) {
         console.log('🔓 Admin user detected - access control handled by individual functions.');
       }
 
-      const userSubs = await Subscription.filter(
-        { user_id: currentUser.id, status: 'active' },
-        '-created_date',
-        1
-      ).catch(() => []);
+      const { data: userSubs, error } = await supabase
+        .from('user_subscriptions')
+        .select('*')
+        .eq('user_id', currentUser.id)
+        .eq('status', 'active')
+        .order('created_at', { ascending: false })
+        .limit(1);
+      
+      if (error) throw error;
 
       if (signal?.aborted) {
         return;
       }
 
-      if (userSubs.length > 0) {
+      if (userSubs && userSubs.length > 0) {
         const activeSub = userSubs[0];
         setSubscription(activeSub);
 
