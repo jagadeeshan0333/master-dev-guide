@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Review } from '@/api/entities';
+import { AdvisorReview } from '@/api/entities';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -61,9 +61,9 @@ export default function ReviewModeration({ user }) {
       let fetchedReviews;
       
       if (filter === 'all') {
-        fetchedReviews = await Review.list('-created_date');
+        fetchedReviews = await AdvisorReview.list('-created_date');
       } else {
-        fetchedReviews = await Review.filter({ status: filter }, '-created_date');
+        fetchedReviews = await AdvisorReview.filter({ status: filter }, '-created_date');
       }
       
       setReviews(fetchedReviews);
@@ -77,7 +77,7 @@ export default function ReviewModeration({ user }) {
 
   const handleApprove = async (review) => {
     try {
-      await Review.update(review.id, {
+      await AdvisorReview.update(review.id, {
         status: 'approved',
         is_public: true
       });
@@ -94,7 +94,7 @@ export default function ReviewModeration({ user }) {
     if (!reason) return;
 
     try {
-      await Review.update(review.id, {
+      await AdvisorReview.update(review.id, {
         status: 'rejected',
         is_public: false,
         rejection_reason: reason
@@ -109,7 +109,7 @@ export default function ReviewModeration({ user }) {
 
   const handleToggleFeatured = async (review) => {
     try {
-      await Review.update(review.id, {
+      await AdvisorReview.update(review.id, {
         is_featured: !review.is_featured
       });
       toast.success(`Review ${!review.is_featured ? 'featured' : 'unfeatured'}`);
@@ -122,7 +122,7 @@ export default function ReviewModeration({ user }) {
 
   const handleTogglePublic = async (review) => {
     try {
-      await Review.update(review.id, {
+      await AdvisorReview.update(review.id, {
         is_public: !review.is_public
       });
       toast.success(`Review ${!review.is_public ? 'published' : 'unpublished'}`);
@@ -148,7 +148,7 @@ export default function ReviewModeration({ user }) {
     if (!selectedReview) return;
 
     try {
-      await Review.update(selectedReview.id, editForm);
+      await AdvisorReview.update(selectedReview.id, editForm);
       toast.success('Review updated successfully');
       setShowEditModal(false);
       loadReviews();

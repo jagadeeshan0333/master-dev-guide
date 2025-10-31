@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Review, User } from '@/api/entities';
+import { AdvisorReview, User } from '@/api/entities';
 import {
   Dialog,
   DialogContent,
@@ -89,7 +89,7 @@ export default function SubmitReviewModal({ open, onClose }) {
     setIsSubmitting(true);
 
     try {
-      await Review.create({
+      await AdvisorReview.create({
         user_id: user.id,
         username: user.display_name || user.email.split('@')[0],
         profile_url: user.profile_image_url || '',

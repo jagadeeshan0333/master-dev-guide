@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Review } from '@/api/entities';
+import { AdvisorReview } from '@/api/entities';
 import { Card } from '@/components/ui/card';
 import { Star, Facebook, Linkedin, Twitter, Instagram, Youtube } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -31,7 +31,7 @@ export default function ReviewScroller() {
   const loadReviews = async () => {
     try {
       // Fetch only approved public reviews, sort by featured then date
-      const allReviews = await Review.filter({ is_public: true, status: 'approved' }, '-created_date');
+      const allReviews = await AdvisorReview.filter({ is_public: true, status: 'approved' }, '-created_date');
       
       // Sort: featured first, then by date
       const sortedReviews = allReviews.sort((a, b) => {
